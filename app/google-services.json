@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "969509959769",
+    "firebase_url": "https://giffel-53d4e.firebaseio.com",
+    "project_id": "giffel-53d4e",
+    "storage_bucket": "giffel-53d4e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969509959769:android:2645e490b3b71a1c",
+        "android_client_info": {
+          "package_name": "edu.fontys.sm41.giffel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969509959769-qat3scd82amdu01m56dfpc9ovmrh0bm6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.fontys.sm41.giffel",
+            "certificate_hash": "d521658285e24de462a2e6c62888838b691c61d0"
+          }
+        },
+        {
+          "client_id": "969509959769-ks6tnt8j7oigk71pq55uo25cri0rnk8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ0q6zvYChxT4ygC_Zq9gJkP6Ho7BdsZo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969509959769-ks6tnt8j7oigk71pq55uo25cri0rnk8m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
