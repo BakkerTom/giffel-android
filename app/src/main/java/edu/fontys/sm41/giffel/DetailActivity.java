@@ -1,7 +1,10 @@
 package edu.fontys.sm41.giffel;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,12 +23,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private ImageView imageView;
     private ImageView avatarImage;
     private TextView userNameText;
     private ProgressBar spinner;
+    private FloatingActionButton floatingActionButton;
 
     private Gif gif;
 
@@ -38,6 +42,7 @@ public class DetailActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.imageView);
         avatarImage = (ImageView) findViewById(R.id.avatarImage);
         userNameText = (TextView) findViewById(R.id.userNameText);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         Bundle data = getIntent().getExtras();
 
@@ -50,6 +55,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Glide.with(this).load(gif.getAvatar()).into(avatarImage);
         userNameText.setText(gif.getDisplayName());
+        floatingActionButton.setOnClickListener(this);
     }
 
     private void loadGif(){
@@ -82,5 +88,12 @@ public class DetailActivity extends AppCompatActivity {
                 Log.e("Storage", "onFailure: Couldn't get download URL" );
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        Context context = floatingActionButton.getContext();
+        Intent intent = new Intent(context, Intent.ACTION_SEND_MULTIPLE.getClass());
+        context.startActivity(intent);
     }
 }
