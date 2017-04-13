@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+
 public class DetailActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private ImageView imageView;
@@ -92,8 +94,15 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
 
     @Override
     public void onClick(View v) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference ref =  storage.getReferenceFromUrl(this.gif.getImageUrl());
+
         Context context = floatingActionButton.getContext();
-        Intent intent = new Intent(context, Intent.ACTION_SEND_MULTIPLE.getClass());
-        context.startActivity(intent);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/gif");
+        final File gifToSend = new File(ref.getDownloadUrl().toString(), gif.getDisplayName());
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(gifToSend));
+        context.startActivity(Intent.createChooser(intent, "Share gif"));
     }
 }
