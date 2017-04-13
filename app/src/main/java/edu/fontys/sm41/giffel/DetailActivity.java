@@ -1,10 +1,15 @@
 package edu.fontys.sm41.giffel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +33,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import java.io.File;
+import java.util.UUID;
 
 public class DetailActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
@@ -39,6 +45,13 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
     private FloatingActionButton closeButton;
 
     private Gif gif;
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,11 +137,29 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
             @Override
             public void onSuccess(Uri uri) {
 
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("image/gif");
-                intent.putExtra(Intent.EXTRA_STREAM, uri);
-                context.startActivity(Intent.createChooser(intent, "Share gif"));
+                verifyStoragePermissions(DetailActivity.this);
+
+                File d = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File f = new File(d, UUID.randomUUID().toString() + ".gif");
+                Ion.with(context)
+                        .load(uri.toString())
+                        .write(f)
+                        .setCallback(new FutureCallback<File>() {
+                    @Override
+                    public void onCompleted(Exception e, File result) {
+                        Log.d("ION", "onCompleted: " + result);
+
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.setType("image/gif");
+                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(result));
+                        context.startActivity(Intent.createChooser(intent, "Share gif"));
+                    }
+                });
+
+
+
+
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -137,7 +168,19 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
                 Log.e("Storage", "onFailure: Couldn't get download URL" );
             }
         });
+    }
 
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
     }
 }
