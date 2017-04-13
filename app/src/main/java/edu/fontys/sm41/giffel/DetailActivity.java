@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,12 +32,19 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
     private TextView userNameText;
     private ProgressBar spinner;
     private FloatingActionButton floatingActionButton;
+    private FloatingActionButton closeButton;
 
     private Gif gif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_detail);
 
         spinner = (ProgressBar) findViewById(R.id.spinner);
@@ -43,6 +52,7 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
         avatarImage = (ImageView) findViewById(R.id.avatarImage);
         userNameText = (TextView) findViewById(R.id.userNameText);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
+        closeButton = (FloatingActionButton) findViewById(R.id.closeButton);
 
         Bundle data = getIntent().getExtras();
 
@@ -56,6 +66,13 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
         Glide.with(this).load(gif.getAvatar()).into(avatarImage);
         userNameText.setText(gif.getDisplayName());
         floatingActionButton.setOnClickListener(this);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void loadGif(){
