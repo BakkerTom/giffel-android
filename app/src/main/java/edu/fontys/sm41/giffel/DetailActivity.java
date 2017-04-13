@@ -115,9 +115,7 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
     public void onClick(View v) {
 
         final Context context = floatingActionButton.getContext();
-        final Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.setType("image/gif");
+
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         final StorageReference ref =  storage.getReferenceFromUrl(this.gif.getImageUrl());
@@ -125,19 +123,12 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                File gifToSend = new File(uri.toString(), gif.getDisplayName()+ ".gif");
 
-                Ion.with(context)
-                        .load(uri.toString())
-                        .write(new File(gif.getUserId()+".gif"))
-                        .setCallback(new FutureCallback<File>() {
-                            @Override
-                            public void onCompleted(Exception e, File result) {
-                                //final File gifToSend = new File(uri, gif.getDisplayName());
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(result));
-                                context.startActivity(Intent.createChooser(intent, "Share gif"));
-                            }
-                        });
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("image/gif");
+                intent.putExtra(Intent.EXTRA_STREAM, uri);
+                context.startActivity(Intent.createChooser(intent, "Share gif"));
 
             }
         }).addOnFailureListener(new OnFailureListener() {
