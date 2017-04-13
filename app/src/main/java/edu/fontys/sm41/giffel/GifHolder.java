@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,7 +33,7 @@ public class GifHolder extends RecyclerView.ViewHolder{
         this.gif = gif;
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference ref = storage.getReferenceFromUrl(this.gif.getImageUrl());
+        StorageReference ref =  storage.getReferenceFromUrl(gif.getImageUrl());
 
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
