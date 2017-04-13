@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -42,7 +43,11 @@ public class GifHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(itemView.getContext()).load(uri.toString()).asGif().into(imageView);
+                Glide.with(itemView.getContext())
+                        .load(uri.toString())
+                        .asGif()
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .into(imageView);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

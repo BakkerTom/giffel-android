@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
@@ -72,6 +73,7 @@ public class DetailActivity extends AppCompatActivity {
                                 return false;
                             }
                         })
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                         .into(imageView);
             }
         }).addOnFailureListener(new OnFailureListener() {
