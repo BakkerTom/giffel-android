@@ -1,9 +1,11 @@
 package edu.fontys.sm41.giffel;
 
+import java.io.Serializable;
+
 /**
  * Created by tom on 30/03/2017.
  */
-public class Gif {
+public class Gif implements Serializable{
 
     private String imageUrl;
 
