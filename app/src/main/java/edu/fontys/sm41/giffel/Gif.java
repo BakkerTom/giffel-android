@@ -8,6 +8,8 @@ import java.io.Serializable;
 public class Gif implements Serializable{
 
     private String imageUrl;
+    private String displayName;
+    private String avatar;
 
     public Gif(){}
 
@@ -17,5 +19,13 @@ public class Gif implements Serializable{
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getAvatar() {
+        return avatar;
     }
 }
