@@ -10,6 +10,7 @@ public class Gif implements Serializable{
     private String imageUrl;
     private String displayName;
     private String avatar;
+    private String userId;
 
     public Gif(){}
 
@@ -27,5 +28,9 @@ public class Gif implements Serializable{
 
     public String getAvatar() {
         return avatar;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }

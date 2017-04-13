@@ -24,6 +24,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.io.File;
 
@@ -123,9 +125,20 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                final File gifToSend = new File(ref.getDownloadUrl().toString(), gif.getDisplayName());
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(gifToSend));
-                context.startActivity(Intent.createChooser(intent, "Share gif"));
+                File gifToSend = new File(uri.toString(), gif.getDisplayName()+ ".gif");
+
+                Ion.with(context)
+                        .load(uri.toString())
+                        .write(new File(gif.getUserId()+".gif"))
+                        .setCallback(new FutureCallback<File>() {
+                            @Override
+                            public void onCompleted(Exception e, File result) {
+                                //final File gifToSend = new File(uri, gif.getDisplayName());
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(result));
+                                context.startActivity(Intent.createChooser(intent, "Share gif"));
+                            }
+                        });
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
