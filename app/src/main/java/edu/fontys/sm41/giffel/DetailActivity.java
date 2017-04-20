@@ -66,6 +66,8 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
         this.requestWindowFeature(Window.FEATURE_ACTION_BAR);
         getSupportActionBar().hide();
 
+        getWindow().setStatusBarColor(Color.BLACKg);
+
         setContentView(R.layout.activity_detail);
 
         spinner = (ProgressBar) findViewById(R.id.spinner);
