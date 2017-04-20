@@ -4,18 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,6 +34,9 @@ import com.koushikdutta.ion.Ion;
 import java.io.File;
 import java.util.UUID;
 
+import co.lujun.androidtagview.ColorFactory;
+import co.lujun.androidtagview.TagContainerLayout;
+
 public class DetailActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
     private ImageView imageView;
@@ -43,6 +45,7 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
     private ProgressBar spinner;
     private FloatingActionButton floatingActionButton;
     private FloatingActionButton closeButton;
+    private TagContainerLayout tagView;
 
     private Gif gif;
 
@@ -70,6 +73,7 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
         userNameText = (TextView) findViewById(R.id.userNameText);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
         closeButton = (FloatingActionButton) findViewById(R.id.closeButton);
+        tagView = (TagContainerLayout) findViewById(R.id.tagView);
 
         Bundle data = getIntent().getExtras();
 
@@ -92,7 +96,26 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
         });
     }
 
+    private void setTagViewSettings(){
+        tagView.setBackgroundColor(Color.TRANSPARENT);
+        tagView.setBorderWidth(0);
+        tagView.setBorderColor(Color.TRANSPARENT);
+        tagView.setBorderRadius(0);
+        tagView.setTagBorderRadius(8);
+        tagView.setTagTextSize(48);
+        tagView.setTagBorderWidth(0);
+        tagView.setTagBorderColor(Color.TRANSPARENT);
+        tagView.setHorizontalInterval(8);
+        tagView.setVerticalInterval(8);
+    }
+
     private void loadGif(){
+
+        if (gif.getTags() != null){
+            setTagViewSettings();
+            tagView.setTags(this.gif.getTags());
+        }
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference ref =  storage.getReferenceFromUrl(this.gif.getImageUrl());
 

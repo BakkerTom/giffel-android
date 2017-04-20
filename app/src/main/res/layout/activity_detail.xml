@@ -5,6 +5,7 @@
     android:id="@+id/activity_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
 
     tools:context="edu.fontys.sm41.giffel.DetailActivity">
 
@@ -53,7 +54,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:background="@android:color/white">
             
             <ImageView
                 android:layout_width="32dp"
@@ -70,10 +72,21 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/userNameText"
                 android:text="Username"
+                android:textSize="16dp"
                 android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
+        <co.lujun.androidtagview.TagContainerLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:id="@+id/tagView">
+
+        </co.lujun.androidtagview.TagContainerLayout>
     </LinearLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
