@@ -36,6 +36,7 @@ import java.util.UUID;
 
 import co.lujun.androidtagview.ColorFactory;
 import co.lujun.androidtagview.TagContainerLayout;
+import co.lujun.androidtagview.TagView;
 
 public class DetailActivity extends AppCompatActivity implements FloatingActionButton.OnClickListener {
 
@@ -101,13 +102,19 @@ public class DetailActivity extends AppCompatActivity implements FloatingActionB
         tagView.setBorderWidth(0);
         tagView.setBorderColor(Color.TRANSPARENT);
         tagView.setBorderRadius(0);
+
+        tagView.setTheme(ColorFactory.NONE);
+        tagView.setTagBackgroundColor(Color.WHITE);
         tagView.setTagBorderRadius(8);
         tagView.setTagTextSize(48);
         tagView.setTagBorderWidth(0);
+        tagView.setTagHorizontalPadding(24);
+        tagView.setTagVerticalPadding(24);
         tagView.setTagBorderColor(Color.TRANSPARENT);
         tagView.setHorizontalInterval(8);
         tagView.setVerticalInterval(8);
     }
+
 
     private void loadGif(){
 
